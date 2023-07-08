@@ -65,8 +65,6 @@ def communicate():
 
 
 # ユーザーインターフェイスの構築
-st.title(" ThreeWorks FAQ bot テスト")
-st.write("サービス概要、発注方法、必要素材、納期、価格、操作方法、セキュリティ、機能、問い合わせ先、独自性、デバイス、データの汎用性など")
 
 user_input = st.text_input("質問を入力してください。", key="user_input", on_change=communicate)
 
