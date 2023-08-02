@@ -66,7 +66,7 @@ def communicate():
 
 # ユーザーインターフェイスの構築
 
-user_input = st.text_input("質問を入力してください。※Botによる回答のため曖昧な回答になる場合がございますのでご了承ください", key="user_input", on_change=communicate)
+user_input = st.text_input("「導入のメリットは？」など質問を入力してください。※Botによる回答のため曖昧な回答になる場合がございますのでご了承ください", key="user_input", on_change=communicate)
 
 if st.session_state["messages"]:
     messages = st.session_state["messages"]
