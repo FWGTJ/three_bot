@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 
 # Streamlit Community Cloudの「Secrets」からOpenAI API keyを取得
-openai.api_key = st.secrets.OpenAIAPI.openai_api_key
+openai.api_key = st.secrets["OpenAIAPI"]["openai_api_key"]
 
 system_prompt = """
 あなたはThreeWorksに所属する優秀なアシスタントです。
@@ -61,7 +61,7 @@ ThreeWorksはWEB-GLを使った「3Dインフォメーション」というWEB�
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {"role": "system", "content": system_prompt}
-        ]
+    ]
 
 # チャットボットとやりとりする関数
 def communicate():
@@ -75,14 +75,12 @@ def communicate():
         messages=messages
     )
 
-    bot_message = response["choices"][0]["message"]
-    messages.append(bot_message)
+    bot_message = response["choices"][0]["message"]["content"]
+    messages.append({"role": "assistant", "content": bot_message})
 
     st.session_state["user_input"] = ""  # 入力欄を消去
 
-
 # ユーザーインターフェイスの構築
-
 user_input = st.text_input("「導入のメリットは？」など質問を入力してください。※Botによる回答のため曖昧な回答になる場合がございますのでご了承ください", key="user_input", on_change=communicate)
 
 if st.session_state["messages"]:
@@ -90,7 +88,6 @@ if st.session_state["messages"]:
 
     for message in reversed(messages[1:]):  # 直近のメッセージを上に
         speaker = "🙂"
-        if message["role"]=="assistant":
-            speaker="🤖"
-
+        if message["role"] == "assistant":
+            speaker = "🤖"
         st.write(speaker + ": " + message["content"])
